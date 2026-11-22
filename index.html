@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>IBRA Soft — Workshop ERP</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     شاشة الدخول الاحترافية
+     ═══════════════════════════════════════════════════════════ -->
+<div id="loginScreen" class="login-container dark-mode">
+  
+  <!-- الجزيئات المتحركة -->
+  <div class="particles" id="particles-container"></div>
+  
+  <!-- الدوائر المتوهجة -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+  
+  <div class="login-content">
+    
+    <!-- الشريط العلوي -->
+    <div class="login-topbar">
+      <div class="topbar-brand">
+        <span style="font-size:1.5rem;">⚡</span>
+        <span style="font-weight:700; font-size:0.875rem; opacity:0.8;">IBRA Soft ERP</span>
+      </div>
+      <button onclick="LoginPage.toggleTheme()" class="theme-toggle">
+        <span id="theme-icon">☀️</span>
+      </button>
+    </div>
+    
+    <!-- المحتوى الرئيسي -->
+    <div class="login-main">
+      
+      <!-- الشعار -->
+      <div class="logo-wrapper">
+        <div class="logo-3d">
+          <div class="logo-inner">⚙️</div>
+          <div class="logo-glow"></div>
+        </div>
+        <h1 class="login-title">IBRA Soft ERP</h1>
+        <p class="login-subtitle">نظام إدارة ورشة التصنيع</p>
+        <div class="version-badge">v1.0.0 — Workshop</div>
+      </div>
+      
+      <!-- التبويبات -->
+      <div class="login-tabs">
+        <button class="login-tab active" id="tab-password" onclick="LoginPage.setMode('password')">
+          🔐 كلمة المرور
+        </button>
+        <button class="login-tab" id="tab-pin" onclick="LoginPage.setMode('pin')">
+          🔢 PIN سريع
+        </button>
+      </div>
+      
+      <!-- نموذج كلمة المرور -->
+      <div class="login-card" id="password-form">
+        <form id="login-form" autocomplete="off" onsubmit="return false;">
+          
+          <div class="input-group">
+            <div class="input-icon">👤</div>
+            <input type="text" id="loginUser" class="login-input" placeholder="اسم المستخدم" autocomplete="username" autocapitalize="none">
+          </div>
+          
+          <div class="input-group">
+            <div class="input-icon">🔒</div>
+            <input type="password" id="loginPass" class="login-input" placeholder="كلمة المرور" autocomplete="current-password">
+            <button type="button" id="toggle-password" class="input-action">
+              <span id="toggle-icon">👁️</span>
+            </button>
+          </div>
+          
+          <div class="remember-row">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="remember" checked>
+              <span class="checkmark">✓</span>
+              <span>تذكرني</span>
+            </label>
+            <button type="button" class="forgot-link" onclick="LoginPage.showHelp()">
+              نسيت كلمة المرور؟
+            </button>
+          </div>
+          
+          <div id="loginError" class="error-box">
+            <span>⚠️</span>
+            <span id="error-text"></span>
+          </div>
+          
+          <button type="button" id="login-btn" class="login-button" onclick="LoginPage.handleLogin()">
+            <span id="login-btn-text">🚀 تسجيل الدخول</span>
+            <span id="login-btn-spinner" style="display:none;">
+              <svg class="spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10" stroke-width="4" opacity="0.25"/>
+                <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="btn-shine"></div>
+          </button>
+          
+          <div class="default-hint">
+            <strong>admin</strong> / <strong>admin123</strong>
+            <div style="font-size:0.65rem;margin-top:2px;opacity:0.7;">الدخول الافتراضي</div>
+          </div>
+          
+        </form>
+      </div>
+      
+      <!-- نموذج PIN -->
+      <div class="login-card" id="pin-form" style="display:none;">
+        <div class="pin-display">
+          <div class="pin-dots" id="pin-dots">
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+          </div>
+          <div class="pin-hint">أدخل PIN المكون من 4 أرقام</div>
+        </div>
+        
+        <div class="pin-pad">
+          <button class="pin-key" onclick="LoginPage.pressPin('1')">1</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('2')">2</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('3')">3</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('4')">4</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('5')">5</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('6')">6</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('7')">7</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('8')">8</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('9')">9</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('clear')" style="font-size:1.25rem;">🔄</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('0')">0</button>
+          <button class="pin-key" onclick="LoginPage.pressPin('back')" style="font-size:1.25rem;">⌫</button>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- التذييل -->
+    <div class="login-footer">
+      <div class="dev-credit">
+        <div class="dev-avatar">إ</div>
+        <div>
+          <div class="dev-name">م/ إبراهيم الحمادي</div>
+          <div class="dev-title">Software Developer</div>
+        </div>
+      </div>
+      <div class="footer-copy">
+        <div>IBRA Soft ERP © 2026</div>
+        <div class="footer-status">
+          <span class="status-dot"></span>
+          <span>النظام جاهز</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     التطبيق الرئيسي
+     ═══════════════════════════════════════════════════════════ -->
+<div id="app" class="app hidden">
+
+  <header class="topbar">
+    <button class="icon-btn menu-btn" onclick="UI.toggleSidebar()" title="القائمة">☰</button>
+    <div class="brand">
+      <span class="brand-icon">⚙️</span>
+      <span class="brand-text">IBRA Workshop ERP</span>
+    </div>
+    <button class="icon-btn notif-btn" onclick="UI.navigate('notifications')" title="التنبيهات">
+  🔔
+  <span id="notifBadge" class="notif-badge-top" style="display:none;">0</span>
+</button>
+    <div class="user-info">
+      <span class="user-badge" id="currentUser"></span>
+      <button class="icon-btn logout-btn" onclick="Auth.logout()" title="خروج">🚪</button>
+    </div>
+  </header>
+
+  <div id="sidebarOverlay" class="sidebar-overlay hidden" onclick="UI.toggleSidebar()"></div>
+  <aside id="sidebar" class="sidebar"><nav id="mainNav" class="main-nav"></nav></aside>
+
+  <main id="content" class="content">
+    <div class="loading">جاري التحميل...</div>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-nav="dashboard" onclick="UI.navigate('dashboard')"><span class="bn-icon">🏠</span><span class="bn-label">الرئيسية</span></button>
+    <button data-nav="projects" onclick="UI.navigate('projects')"><span class="bn-icon">📁</span><span class="bn-label">المشاريع</span></button>
+    <button data-nav="production" onclick="UI.navigate('production')"><span class="bn-icon">🏭</span><span class="bn-label">التصنيع</span></button>
+    <button data-nav="inventory" onclick="UI.navigate('inventory')"><span class="bn-icon">📦</span><span class="bn-label">المخزون</span></button>
+    <button data-nav="more" onclick="UI.navigate('more')"><span class="bn-icon">☰</span><span class="bn-label">المزيد</span></button>
+  </nav>
+
+</div>
+
+<!-- النوافذ المنبثقة -->
+<div id="modalOverlay" class="modal-overlay hidden" onclick="UI.closeModal(event)">
+  <div id="modalContent" class="modal-content" onclick="event.stopPropagation()"></div>
+</div>
+
+<!-- التنبيهات -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ═══════════ السكربتات ═══════════ -->
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
+<script src="data/seed.js"></script>
+
+<script src="js/modules/dashboard.js"></script>
+<script src="js/modules/projects.js"></script>
+<script src="js/modules/production.js"></script>
+<script src="js/modules/inventory.js"></script>
+<script src="js/modules/machines.js"></script>
+<script src="js/modules/costing.js"></script>
+<script src="js/modules/reports.js"></script>
+<script src="js/modules/settings.js"></script>
+<script src="js/modules/pos.js"></script>
+<script src="js/modules/customers.js"></script>
+<script src="js/modules/employees.js"></script>
+<script src="js/modules/quotes.js"></script>
+<script src="js/modules/invoices.js"></script>
+<script src="js/modules/accounting.js"></script>
+<script src="js/modules/vouchers.js"></script>
+<script src="js/modules/payroll.js"></script>
+<script src="js/modules/smart.js"></script>
+<script src="js/modules/cashboxes.js"></script>
+<script src="js/modules/permissions.js"></script>
+<script src="js/modules/notifications.js"></script>
+<script src="js/modules/fraud.js"></script>
+<script src="js/modules/statements.js"></script>
+<script src="js/modules/purchases.js"></script>
+<script src="js/modules/more.js"></script>
+
+<!-- سكربت التحكم في صفحة الدخول -->
+<script>
+const LoginPage = {
+  _loginMode: 'password',
+  _pinBuffer: '',
+
+  init() {
+    // إضافة الجزيئات
+    const container = document.getElementById('particles-container');
+    if (container) {
+      let html = '';
+      for (let i = 0; i < 20; i++) {
+        const left = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = 10 + Math.random() * 15;
+        const size = 2 + Math.random() * 3;
+        html += `<div class="particle" style="left:${left}%;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:-${delay}s;"></div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    // استرجاع الوضع
+    const theme = localStorage.getItem('login_theme') || 'dark';
+    const loginScreen = document.getElementById('loginScreen');
+    if (theme === 'light') {
+      loginScreen.classList.remove('dark-mode');
+      loginScreen.classList.add('light-mode');
+      document.getElementById('theme-icon').textContent = '🌙';
+    }
+
+    // استرجاع اسم المستخدم
+    const savedUser = localStorage.getItem('last_username');
+    if (savedUser) document.getElementById('loginUser').value = savedUser;
+
+    // ربط زر إظهار كلمة المرور
+    document.getElementById('toggle-password').addEventListener('click', () => {
+      const pass = document.getElementById('loginPass');
+      const icon = document.getElementById('toggle-icon');
+      if (pass.type === 'password') {
+        pass.type = 'text';
+        icon.textContent = '🙈';
+      } else {
+        pass.type = 'password';
+        icon.textContent = '👁️';
+      }
+    });
+  },
+
+  toggleTheme() {
+    const container = document.getElementById('loginScreen');
+    const icon = document.getElementById('theme-icon');
+    if (container.classList.contains('dark-mode')) {
+      container.classList.remove('dark-mode');
+      container.classList.add('light-mode');
+      icon.textContent = '🌙';
+      localStorage.setItem('login_theme', 'light');
+    } else {
+      container.classList.remove('light-mode');
+      container.classList.add('dark-mode');
+      icon.textContent = '☀️';
+      localStorage.setItem('login_theme', 'dark');
+    }
+  },
+
+  setMode(mode) {
+    this._loginMode = mode;
+    this._pinBuffer = '';
+    document.getElementById('tab-password').classList.toggle('active', mode === 'password');
+    document.getElementById('tab-pin').classList.toggle('active', mode === 'pin');
+    document.getElementById('password-form').style.display = mode === 'password' ? 'block' : 'none';
+    document.getElementById('pin-form').style.display = mode === 'pin' ? 'block' : 'none';
+    if (mode === 'password') setTimeout(() => document.getElementById('loginUser')?.focus(), 200);
+    if (mode === 'pin') this.updatePinDots();
+  },
+
+  pressPin(key) {
+    if (key === 'clear') {
+      this._pinBuffer = '';
+    } else if (key === 'back') {
+      this._pinBuffer = this._pinBuffer.slice(0, -1);
+    } else {
+      if (this._pinBuffer.length >= 4) return;
+      this._pinBuffer += key;
+    }
+    this.updatePinDots();
+    if (this._pinBuffer.length === 4) this.handlePinLogin();
+  },
+
+  updatePinDots() {
+    document.querySelectorAll('.pin-dot').forEach((dot, i) => {
+      dot.classList.toggle('filled', i < this._pinBuffer.length);
+    });
+  },
+
+  handlePinLogin() {
+    const pin = this._pinBuffer;
+    this._pinBuffer = '';
+
+    // PIN = 1234 للمدير فقط (يمكن تعديله لاحقاً)
+    if (pin === '1234') {
+      this.showToast('مرحباً مدير النظام 👋', 'success');
+      document.getElementById('loginUser').value = 'admin';
+      document.getElementById('loginPass').value = 'admin123';
+      this.handleLogin();
+    } else {
+      this.showToast('PIN غير صحيح', 'error');
+      this.shakePin();
+      this.updatePinDots();
+    }
+  },
+
+  shakePin() {
+    const dots = document.getElementById('pin-dots');
+    if (dots) {
+      dots.style.animation = 'shake 0.5s';
+      setTimeout(() => dots.style.animation = '', 500);
+    }
+  },
+
+  handleLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const remember = document.getElementById('remember').checked;
+
+  if (!username || !password) {
+    this.showError('يرجى إدخال اسم المستخدم وكلمة المرور');
+    return;
+  }
+
+  this.setLoading(true);
+  this.hideError();
+
+  setTimeout(() => {
+    // ✅ البحث في جدول الموظفين أولاً (الموظفون الجدد)
+    let found = (DB.get('employees') || []).find(e => 
+      e.username === username && 
+      e.password === password && 
+      e.status !== 'inactive'
+    );
+
+    // ✅ إذا لم يوجد، ابحث في جدول المستخدمين (القديم)
+    if (!found) {
+      found = (DB.get('users') || []).find(u => 
+        u.username === username && 
+        u.password === password && 
+        u.active !== false
+      );
+    }
+
+    if (!found) {
+      this.showError('بيانات الدخول غير صحيحة');
+      this.setLoading(false);
+      return;
+    }
+
+    // إنشاء جلسة
+    const session = {
+      userId: found.id,
+      username: found.username,
+      fullName: found.fullName || found.name || found.username,
+      role: found.role,
+      loginAt: new Date().toISOString()
+    };
+    localStorage.setItem('ibra_session', JSON.stringify(session));
+
+    if (remember) {
+      localStorage.setItem('last_username', username);
+    } else {
+      localStorage.removeItem('last_username');
+    }
+
+    this.showToast(`مرحباً ${session.fullName} 👋`, 'success');
+
+    setTimeout(() => {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      UI.showApp();
+    }, 500);
+  }, 300);
+},
+
+  showError(msg) {
+    const box = document.getElementById('loginError');
+    document.getElementById('error-text').textContent = msg;
+    box.classList.add('show');
+  },
+
+  hideError() {
+    document.getElementById('loginError').classList.remove('show');
+  },
+
+  setLoading(loading) {
+    const btn = document.getElementById('login-btn');
+    const text = document.getElementById('login-btn-text');
+    const spinner = document.getElementById('login-btn-spinner');
+    btn.disabled = loading;
+    if (loading) {
+      text.textContent = 'جارٍ الدخول...';
+      spinner.style.display = 'inline-block';
+    } else {
+      text.textContent = '🚀 تسجيل الدخول';
+      spinner.style.display = 'none';
+    }
+  },
+
+  showToast(msg, type) {
+    const t = document.getElementById('toast');
+    if (t) {
+      t.textContent = msg;
+      t.className = `toast ${type}`;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 2500);
+    }
+  },
+
+  showHelp() {
+    alert('لإعادة تعيين كلمة المرور، تواصل مع مدير النظام.\n\nبيانات الدخول الافتراضية:\n👤 admin\n🔒 admin123');
+  }
+};
+
+// الإقلاع
+window.addEventListener('DOMContentLoaded', function() {
+  try {
+    DB.init();
+    Seed.loadIfEmpty();
+    
+    const session = Auth.current();
+    if (session) {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      UI.showApp();
+    } else {
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('app').classList.add('hidden');
+      LoginPage.init();
+    }
+  } catch (e) {
+    console.error('خطأ في الإقلاع:', e);
+  }
+});
+</script>
+</body>
+</html>

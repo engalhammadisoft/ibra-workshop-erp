@@ -1,0 +1,14 @@
+/* تنسيقات الطباعة */
+@media print {
+  body { background: #fff; }
+  .topbar, .sidebar, .bottom-nav, .modal-overlay, .toast, .no-print {
+    display: none !important;
+  }
+  .app { display: block; }
+  .content { padding: 0; overflow: visible; }
+  .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+  .page-header { margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 1px solid #999; padding: 6px 8px; font-size: 12px; }
+  th { background: #eee; }
+}
